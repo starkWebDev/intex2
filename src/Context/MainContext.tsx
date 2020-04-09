@@ -261,8 +261,7 @@ export class MainProvider extends Component {
 	};
 
 	state: IInitial = {
-		rootURL:
-			"http://ec2-13-59-34-252.us-east-2.compute.amazonaws.com:8000/api/",
+		rootURL: "https://api.gofundmeanalyzer.com/api/",
 		campaigns: [],
 		isLoading: false,
 		selectedCampaign: null,

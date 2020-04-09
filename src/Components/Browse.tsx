@@ -53,32 +53,32 @@ export const Browse = () => {
 					{
 						title: "Goal",
 						field: "goal",
-						filterPlaceholder: "'#-#' or #",
+						filterPlaceholder: "#-# or #",
 						customFilterAndSearch: numFilter,
 					},
 
 					{
 						title: "Current Amount",
 						field: "current_amount",
-						filterPlaceholder: "'#-#' or #",
+						filterPlaceholder: "#-# or #",
 						customFilterAndSearch: numFilter,
 					},
 					{
 						title: "Percent of Goal Reached",
 						field: "percentOfGoal",
-						filterPlaceholder: "'#-#' or #",
+						filterPlaceholder: "#-# or #",
 						customFilterAndSearch: numFilter,
 					},
 					{
 						title: "# Donators",
 						field: "donators",
-						filterPlaceholder: "'#-#' or #",
+						filterPlaceholder: "#-# or #",
 						customFilterAndSearch: numFilter,
 					},
 					{
 						title: "Social Shares",
 						field: "social_share_total",
-						filterPlaceholder: "'#-#' or #",
+						filterPlaceholder: "#-# or #",
 						customFilterAndSearch: numFilter,
 					},
 					{
