@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) =>
 			margin: `${theme.spacing(4)}px auto`,
 		},
 		textPaper: {
-			width: "500px",
+			width: "100%",
+			maxWidth: "500px",
 			margin: `${theme.spacing(4)}px auto`,
 			padding: theme.spacing(3),
 		},

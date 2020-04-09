@@ -12,7 +12,6 @@ export const DonationsTimeGraph = () => {
 	const context = React.useContext(MainContext);
 
 	return (
-		//add title
 		<Paper elevation={3}>
 			<Chart data={context.donationsTimeData} height={350}>
 				<ArgumentAxis />

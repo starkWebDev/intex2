@@ -31,7 +31,8 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) =>
 	createStyles({
 		container: {
-			width: "50%",
+			width: "100%",
+			maxWidth: "750px",
 			margin: `${theme.spacing(4)}px auto`,
 		},
 		paper: {
@@ -75,7 +76,6 @@ export const Predict = () => {
 	const [loading, setLoading] = React.useState<boolean>(false);
 	const [error, setError] = React.useState<boolean>(false);
 
-	// when we have the list of inputs, try to mirror the gofundme page's form for simplicity in filling it out
 	return (
 		<Container className={classes.container}>
 			<Paper className={classes.paper}>
