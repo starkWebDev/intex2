@@ -1,0 +1,1 @@
+export const CURRENCY_CODES = ['USD', 'CAD', 'GBP', 'EUR', 'AUD', 'CHF', 'SEK', 'DKK', 'NOK']

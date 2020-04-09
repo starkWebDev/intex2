@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import { Browse } from "./Components/Browse";
+import { Analyze } from "./Components/Analyze";
+import { Predict } from "./Components/Predict";
+import { HeaderAppBar } from "./Components/HeaderAppBar";
+import { makeStyles, createStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) =>
+	createStyles({
+		"@global": {
+			body: {
+				backgroundColor: theme.palette.background.default,
+			},
+		},
+	})
+);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	useStyles();
+	return (
+		<>
+			<HeaderAppBar />
+			<Switch>
+				<Route path="/analyze">
+					<Analyze />
+				</Route>
+				<Route path="/predict">
+					<Predict />
+				</Route>
+				<Route path="/">
+					<Browse />
+				</Route>
+			</Switch>
+		</>
+	);
 }
 
 export default App;
