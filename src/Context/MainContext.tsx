@@ -3,6 +3,7 @@ import { IInitial, ICampaign, IData, ISocialSharesData } from "./Interfaces";
 import axios from "axios";
 import produce from "immer";
 import _ from "lodash";
+import { MathFuncs } from "../utils/MathFuncs";
 
 const initialContext: IInitial = {
 	rootURL: "",
@@ -13,12 +14,21 @@ const initialContext: IInitial = {
 	donationsTimeData: [],
 	socialSharesData: [],
 	detailsLoading: false,
+	avgDonators: 0,
+	stdevDonators: 0,
+	avgUpdates: 0,
+	stdevUpdates: 0,
+	avgSocialShares: 0,
+	stdevSocialShares: 0,
+	avgCurrentRaisedPerDayActive: 0,
+	avgPercentRaisedPerDayActive: 0,
 	getCampaigns: () => {},
 	setSelectedCampaign: (idx: number) => new Promise<void>(() => {}),
 	getDonationsTimeData: () => {},
 	getSocialSharesData: () => {},
 	addSelectedToSocial: () => {},
 	removeSelectedFromSocial: () => {},
+	runMathFuncs: () => {},
 };
 
 export const MainContext = React.createContext(initialContext);
@@ -27,6 +37,7 @@ export class MainProvider extends Component {
 	async componentDidMount() {
 		await this.getCampaigns();
 		this.getSocialSharesData();
+		this.runMathFuncs();
 	}
 	getCampaigns = async () => {
 		this.setState(
@@ -197,6 +208,58 @@ export class MainProvider extends Component {
 		);
 	};
 
+	runMathFuncs = () => {
+		const mathFuncs = new MathFuncs();
+		const { campaigns } = this.state;
+		const avgDonators = mathFuncs.Avg(
+			campaigns.map(({ donators }) => donators)
+		);
+		const stdevDonators = mathFuncs.StandardDeviation(
+			campaigns.map(({ donators }) => donators)
+		);
+		const avgUpdates = mathFuncs.Avg(
+			campaigns.map(({ update_count }) => update_count)
+		);
+		const stdevUpdates = mathFuncs.StandardDeviation(
+			campaigns.map(({ update_count }) => update_count)
+		);
+		const avgSocialShares = mathFuncs.Avg(
+			campaigns.map(({ social_share_total }) => social_share_total)
+		);
+		const stdevSocialShares = mathFuncs.StandardDeviation(
+			campaigns.map(({ social_share_total }) => social_share_total)
+		);
+		const avgCurrentRaisedPerDayActive = mathFuncs.Avg(
+			campaigns
+				.filter(({ days_active }) => days_active > 0)
+				.map(
+					({ current_amount, days_active }, idx) =>
+						Number(current_amount) / days_active
+				)
+		);
+		const avgPercentRaisedPerDayActive = mathFuncs.Avg(
+			campaigns
+				.filter(({ days_active }) => days_active > 0)
+				.map(
+					({ current_amount, goal, days_active }) =>
+						Number(current_amount) / Number(goal) / days_active
+				)
+		);
+
+		this.setState(
+			produce((draft) => {
+				draft.avgDonators = avgDonators;
+				draft.stdevDonators = stdevDonators;
+				draft.avgUpdates = avgUpdates;
+				draft.stdevUpdates = stdevUpdates;
+				draft.avgSocialShares = avgSocialShares;
+				draft.stdevSocialShares = stdevSocialShares;
+				draft.avgCurrentRaisedPerDayActive = avgCurrentRaisedPerDayActive;
+				draft.avgPercentRaisedPerDayActive = avgPercentRaisedPerDayActive;
+			})
+		);
+	};
+
 	state: IInitial = {
 		rootURL:
 			"http://ec2-13-59-34-252.us-east-2.compute.amazonaws.com:8000/api/",
@@ -207,12 +270,21 @@ export class MainProvider extends Component {
 		donationsTimeData: [],
 		socialSharesData: [],
 		detailsLoading: false,
+		avgDonators: 0,
+		stdevDonators: 0,
+		avgUpdates: 0,
+		stdevUpdates: 0,
+		avgSocialShares: 0,
+		stdevSocialShares: 0,
+		avgCurrentRaisedPerDayActive: 0,
+		avgPercentRaisedPerDayActive: 0,
 		getCampaigns: this.getCampaigns,
 		setSelectedCampaign: this.setSelectedCampaign,
 		getDonationsTimeData: this.getDonationsTimeData,
 		getSocialSharesData: this.getSocialSharesData,
 		addSelectedToSocial: this.addSelectedToSocial,
 		removeSelectedFromSocial: this.removeSelectedFromSocial,
+		runMathFuncs: this.runMathFuncs,
 	};
 
 	render() {

@@ -69,12 +69,21 @@ export interface IInitial {
     donationsTimeData: IData[]
     socialSharesData: ISocialSharesData[]
     detailsLoading: boolean
+    avgDonators: number
+    stdevDonators: number
+    avgUpdates: number
+    stdevUpdates: number
+    avgSocialShares: number
+    stdevSocialShares: number
+    avgCurrentRaisedPerDayActive: number
+    avgPercentRaisedPerDayActive: number
     getCampaigns: () => void
     setSelectedCampaign: (idx: number) => Promise<void>
     getDonationsTimeData: () => void
     getSocialSharesData: () => void
     addSelectedToSocial: () => void
     removeSelectedFromSocial: () => void
+    runMathFuncs: () => void
 }
 
 

@@ -18,6 +18,13 @@ import { ExpandMore, Clear } from "@material-ui/icons";
 import { DonationsTimeGraph } from "./DonationsTimeGraph";
 import { SocialSharesGraph } from "./SocialSharesGraph";
 import { PercentReachedDonut } from "./PercentReachedDonut";
+import { MathFuncs } from "../utils/MathFuncs";
+import { red, green } from "@material-ui/core/colors";
+import { DonationsPanel } from "./DonationsPanel";
+import { UpdatesPanel } from "./UpdatesPanel";
+import { DetailsPanel } from "./DetailsPanel";
+
+const mathFuncs = new MathFuncs();
 
 const useStyles = makeStyles((theme) =>
 	createStyles({
@@ -49,6 +56,18 @@ const useStyles = makeStyles((theme) =>
 			top: theme.spacing(1),
 			right: theme.spacing(1),
 		},
+		dataPaper: {
+			padding: theme.spacing(2),
+		},
+		bad: {
+			color: red[600],
+		},
+		good: {
+			color: green[600],
+		},
+		panels: {
+			width: "100%",
+		},
 	})
 );
 
@@ -61,6 +80,29 @@ export const DetailsModal = ({ open, handleClose }: IProps) => {
 	const context = React.useContext(MainContext);
 	const classes = useStyles();
 	const [donationsPanel, setDonationsPanel] = React.useState<boolean>(false);
+	const [updatesPanel, setUpdatesPanel] = React.useState<boolean>(false);
+	const [detailsPanel, setDetailsPanel] = React.useState<boolean>(false);
+	const donationsZScore = context.selectedCampaign
+		? mathFuncs.ZScore(
+				context.selectedCampaign!.donators,
+				context.avgDonators,
+				context.stdevDonators
+		  )
+		: "loading...";
+	const sharesZScore = context.selectedCampaign
+		? mathFuncs.ZScore(
+				context.selectedCampaign!.social_share_total,
+				context.avgSocialShares,
+				context.stdevSocialShares
+		  )
+		: "loading...";
+	const updatesZscore = context.selectedCampaign
+		? mathFuncs.ZScore(
+				context.selectedCampaign!.update_count,
+				context.avgUpdates,
+				context.stdevUpdates
+		  )
+		: "loading...";
 
 	return (
 		<Modal open={open} onClose={handleClose} className={classes.modal}>
@@ -124,36 +166,160 @@ export const DetailsModal = ({ open, handleClose }: IProps) => {
 						</Typography>
 						<SocialSharesGraph />
 					</Grid>
-					<Grid
-						container
-						item
-						xs={12}
-						md={4}
-						style={{ width: "100%" }}
-					>
+					<Grid container item xs={12} md={4} direction="column">
+						<Paper elevation={3} className={classes.dataPaper}>
+							<Grid item xs={12}>
+								<Typography>
+									Donators:{" "}
+									{donationsZScore < 0 ? (
+										<span className={classes.bad}>Bad</span>
+									) : (
+										<span className={classes.good}>
+											Good
+										</span>
+									)}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									Average number donators:{" "}
+									{context.avgDonators}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									This campaign's donators:{" "}
+									{context.selectedCampaign?.donators}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									This campaign's donators z-score:{" "}
+									{donationsZScore}
+								</Typography>
+							</Grid>
+						</Paper>
+					</Grid>
+					<Grid container item xs={12} md={4} direction="column">
+						<Paper elevation={3} className={classes.dataPaper}>
+							<Grid item xs={12}>
+								<Typography>
+									Social Shares:{" "}
+									{sharesZScore < 0 ? (
+										<span className={classes.bad}>Bad</span>
+									) : (
+										<span className={classes.good}>
+											Good
+										</span>
+									)}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									Average shares on social media:{" "}
+									{context.avgSocialShares}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									This campaign's shares:{" "}
+									{
+										context.selectedCampaign
+											?.social_share_total
+									}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									This campaign's shares z-score:{" "}
+									{sharesZScore}
+								</Typography>
+							</Grid>
+						</Paper>
+					</Grid>
+					<Grid container item xs={12} md={4} direction="column">
+						<Paper elevation={3} className={classes.dataPaper}>
+							<Grid item xs={12}>
+								<Typography>
+									Updates:{" "}
+									{updatesZscore < 0 ? (
+										<span className={classes.bad}>Bad</span>
+									) : (
+										<span className={classes.good}>
+											Good
+										</span>
+									)}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									Average number of updates:{" "}
+									{context.avgUpdates}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									This campaign's updates count:{" "}
+									{context.selectedCampaign?.update_count}
+								</Typography>
+							</Grid>
+							<Grid item xs={12}>
+								<Typography>
+									This campaign's update count z-score:{" "}
+									{updatesZscore}
+								</Typography>
+							</Grid>
+						</Paper>
+					</Grid>
+
+					<Grid container item xs={12} md={12}>
 						<ExpansionPanel
 							expanded={donationsPanel}
 							onChange={() => {
 								setDonationsPanel(!donationsPanel);
 							}}
+							className={classes.panels}
 						>
 							<ExpansionPanelSummary expandIcon={<ExpandMore />}>
 								<Typography>Donations</Typography>
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
-								<ul>
-									{context.selectedCampaign?.donations?.map(
-										(don) => (
-											<li key={don.donation_id}>
-												{don.amount}
-											</li>
-										)
-									)}
-								</ul>
+								<DonationsPanel />
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
 					</Grid>
-					<Grid container item xs={12} md={8}></Grid>
+					<Grid container item xs={12} md={12}>
+						<ExpansionPanel
+							expanded={updatesPanel}
+							onChange={() => {
+								setUpdatesPanel(!updatesPanel);
+							}}
+							className={classes.panels}
+						>
+							<ExpansionPanelSummary expandIcon={<ExpandMore />}>
+								<Typography>Updates</Typography>
+							</ExpansionPanelSummary>
+							<ExpansionPanelDetails>
+								<UpdatesPanel />
+							</ExpansionPanelDetails>
+						</ExpansionPanel>
+					</Grid>
+					<Grid container item xs={12} md={12}>
+						<ExpansionPanel
+							expanded={detailsPanel}
+							onChange={() => {
+								setDetailsPanel(!detailsPanel);
+							}}
+							className={classes.panels}
+						>
+							<ExpansionPanelSummary expandIcon={<ExpandMore />}>
+								<Typography>Details</Typography>
+							</ExpansionPanelSummary>
+							<ExpansionPanelDetails>
+								<DetailsPanel />
+							</ExpansionPanelDetails>
+						</ExpansionPanel>
+					</Grid>
 				</Grid>
 			</Paper>
 		</Modal>
