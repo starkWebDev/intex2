@@ -162,7 +162,7 @@ export const DetailsModal = ({ open, handleClose }: IProps) => {
 						xs={12}
 					>
 						<Typography variant="h6">
-							Donators over Total Social Shares
+							Donors over Total Social Shares
 						</Typography>
 						<SocialSharesGraph />
 					</Grid>
@@ -170,7 +170,7 @@ export const DetailsModal = ({ open, handleClose }: IProps) => {
 						<Paper elevation={3} className={classes.dataPaper}>
 							<Grid item xs={12}>
 								<Typography>
-									Donators:{" "}
+									Donors:{" "}
 									{donationsZScore < 0 ? (
 										<span className={classes.bad}>Bad</span>
 									) : (
@@ -182,19 +182,18 @@ export const DetailsModal = ({ open, handleClose }: IProps) => {
 							</Grid>
 							<Grid item xs={12}>
 								<Typography>
-									Average number donators:{" "}
-									{context.avgDonators}
+									Average number donors: {context.avgDonators}
 								</Typography>
 							</Grid>
 							<Grid item xs={12}>
 								<Typography>
-									This campaign's donators:{" "}
+									This campaign's donors:{" "}
 									{context.selectedCampaign?.donators}
 								</Typography>
 							</Grid>
 							<Grid item xs={12}>
 								<Typography>
-									This campaign's donators z-score:{" "}
+									This campaign's donors z-score:{" "}
 									{donationsZScore}
 								</Typography>
 							</Grid>

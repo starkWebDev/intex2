@@ -70,7 +70,7 @@ export const Browse = () => {
 						customFilterAndSearch: numFilter,
 					},
 					{
-						title: "# Donators",
+						title: "# Donors",
 						field: "donators",
 						filterPlaceholder: "#-# or #",
 						customFilterAndSearch: numFilter,

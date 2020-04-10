@@ -39,7 +39,7 @@ export const Analyze = () => {
 				<Grid item xs={12} md={6}>
 					<Paper className={classes.textPaper} elevation={3}>
 						<Typography variant="h6" gutterBottom>
-							How Social Shares Affect Donators
+							How Social Shares Affect Donors
 						</Typography>
 						<SocialSharesGraph />
 					</Paper>
@@ -47,19 +47,18 @@ export const Analyze = () => {
 				<Grid item container xs={12} md={6} alignContent="stretch">
 					<Paper className={classes.textPaper} elevation={3}>
 						<Typography variant="h6" gutterBottom>
-							How Social Shares Affect Donators
+							How Social Shares Affect Donors
 						</Typography>
 						<Typography variant="body1">
 							As you can see in the graph about how social shares
-							affect donators, there is a strong correlation
-							between the number of shares on social media
-							(x-axis), and the number of donators (y-axis) that a
-							campaign has.
+							affect donors, there is a strong correlation between
+							the number of shares on social media (x-axis), and
+							the number of donors (y-axis) that a campaign has.
 						</Typography>
 						<br />
 						<Typography variant="body1">
 							It is the strongest indicator of how well an active
-							campaign will do in terms of number of donators as
+							campaign will do in terms of number of donors as
 							well as overall money raised. While it is not
 							something you as the campaign director may have 100%
 							power over, it is something you can impact. Sharing
@@ -103,7 +102,7 @@ export const Analyze = () => {
 							update) is that you have the potential to reach new
 							people that have not seen your campaign before,
 							which naturally increases your chances of increasing
-							donators and donations.
+							donors and donations.
 						</Typography>
 					</Paper>
 				</Grid>

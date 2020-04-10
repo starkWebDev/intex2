@@ -21,7 +21,7 @@ export const DetailsPanel = () => {
 							<TableCell>Title</TableCell>
 							<TableCell>Goal</TableCell>
 							<TableCell>Current Raised</TableCell>
-							<TableCell>Donators</TableCell>
+							<TableCell>Donors</TableCell>
 							<TableCell>Days Active</TableCell>
 							<TableCell>Description</TableCell>
 							<TableCell>Campaign image</TableCell>

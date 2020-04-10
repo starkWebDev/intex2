@@ -99,7 +99,7 @@ export const Predict = () => {
 							setDialogMessage(
 								`Based on your inputs, we predict that you will get ${Math.round(
 									Number(res.data.donators)
-								)} donators and and average donation of ${Math.round(
+								)} donors and and average donation of ${Math.round(
 									Number(res.data.avg_donation)
 								)} ${currency_code}!`
 							);
