@@ -25,8 +25,6 @@ import { COUNTRY_CODES } from "../data/CountryCodes";
 import { CURRENCY_CODES } from "../data/CurrencyCodes";
 import Axios from "axios";
 import { MainContext } from "../Context/MainContext";
-import { useHistory } from "react-router-dom";
-// import { blueGrey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) =>
 	createStyles({
@@ -72,7 +70,6 @@ export const Predict = () => {
 	const [dialogMessage, setDialogMessage] = React.useState<string | null>(
 		null
 	);
-	const history = useHistory();
 	const [loading, setLoading] = React.useState<boolean>(false);
 	const [error, setError] = React.useState<boolean>(false);
 
@@ -229,16 +226,6 @@ export const Predict = () => {
 										? "We are very sorry, but there seems to be some technical difficulties. Please try again later"
 										: dialogMessage}
 								</Typography>
-								{error || (
-									<Typography variant="subtitle1">
-										If you are unhappy with your results,
-										click the advice button below to be
-										directed to our analyze page that will
-										help you understand what makes the most
-										difference in having a successful
-										campaign.
-									</Typography>
-								)}
 							</Grid>
 							<Grid
 								item
@@ -257,18 +244,6 @@ export const Predict = () => {
 										variant="contained"
 									>
 										Close
-									</Button>
-								</Grid>
-								<Grid item>
-									<Button
-										onClick={() => {
-											setDialogMessage(null);
-											history.push("/analyze");
-										}}
-										variant="contained"
-										color="secondary"
-									>
-										Advice
 									</Button>
 								</Grid>
 							</Grid>
